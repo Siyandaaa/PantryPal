@@ -35,7 +35,7 @@ android {
         // Base URL of PantryPal's custom auth API (see root README). Point
         // this at your deployed hosting (Azure/Render/etc.), or 10.0.2.2 for
         // a locally-run copy of the backend when testing on the emulator.
-        buildConfigField("String", "API_BASE_URL", "\"https://pantrypal-api.azurewebsites.net/\"")
+        buildConfigField("String", "API_BASE_URL", "\"https://pantrypalbackend-ajbjf2eke3ccevdz.southafricanorth-01.azurewebsites.net/\"")
         buildConfigField("String", "SPOONACULAR_API_KEY", "\"$spoonacularApiKey\"")
     }
 
