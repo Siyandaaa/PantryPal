@@ -1,4 +1,3 @@
-# .github/workflows/ci.yml
 name: PantryPal CI
 
 on:
@@ -20,8 +19,11 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      # NOTE: android-actions/setup-android@v3 has been REMOVED.
+      # It fails with "Failed to find package 'tools'" because that
+      # package was deleted from the Android SDK repository.
+      # The ubuntu-latest runner already has the SDK pre-installed
+      # (ANDROID_HOME is set), so no extra setup is needed.
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -34,8 +36,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      # The google-services plugin needs this file even for unit tests.
-      # A minimal placeholder lets the build proceed without secrets.
+      # google-services plugin needs this file even for unit tests.
       - name: Create placeholder google-services.json
         run: |
           mkdir -p app
@@ -56,14 +57,10 @@ jobs:
                 },
                 "oauth_client": [],
                 "api_key": [
-                  {
-                    "current_key": "AIzaSyDUMMY_KEY_FOR_CI_ONLY"
-                  }
+                  { "current_key": "AIzaSyDUMMY_KEY_FOR_CI_ONLY" }
                 ],
                 "services": {
-                  "appinvite_service": {
-                    "other_platform_oauth_client": []
-                  }
+                  "appinvite_service": { "other_platform_oauth_client": [] }
                 }
               }
             ],
@@ -102,16 +99,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22.x'          # ← range, not the bare number
+          node-version: '22.x'
           cache: npm
           cache-dependency-path: backend/package-lock.json
 
       - name: Install dependencies
         run: npm install
-
-      # The test fixture already exists, but we ensure it is present.
-      - name: Verify test fixture exists
-        run: test -f test/fixtures.fakeServiceAccount.json
 
       - name: Run backend tests
         run: npm test
