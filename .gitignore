@@ -1,0 +1,29 @@
+# Android / Gradle
+*.iml
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+/build/
+/captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+google-services.json
+
+# Gradle wrapper jar is fetched by CI / `gradle wrapper`; keep the repo lean.
+gradle/wrapper/gradle-wrapper.jar
+
+# Node / backend
+backend/node_modules/
+backend/.env
+backend/serviceAccountKey.json
+
+# Misc
+*.log
+
+# Project exclude paths
+/app/build/
+/app/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/
+/app/build/intermediates/javac/debugAndroidTest/compileDebugAndroidTestJavaWithJavac/classes/

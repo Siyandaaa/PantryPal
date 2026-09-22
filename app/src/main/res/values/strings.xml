@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PantryPal</string>
+    <string name="default_web_client_id" translatable="false">59128817244-b1k0n2aobvgdl299lmgu4n8cead86qp5.apps.googleusercontent.com</string>
+</resources>
