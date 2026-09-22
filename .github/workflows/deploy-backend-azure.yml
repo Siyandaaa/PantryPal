@@ -1,3 +1,4 @@
+# .github/workflows/deploy-backend-azure.yml
 name: Deploy backend to Azure
 
 on:
@@ -9,8 +10,8 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME:  'PantryPalBackend'
-  AZURE_WEBAPP_PACKAGE_PATH: 'backend' 
+  AZURE_WEBAPP_NAME: 'PantryPalBackend'
+  AZURE_WEBAPP_PACKAGE_PATH: 'backend'
   NODE_VERSION: '22'
 
 jobs:
