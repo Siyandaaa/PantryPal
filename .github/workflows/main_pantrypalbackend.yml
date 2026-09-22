@@ -1,4 +1,3 @@
-# .github/workflows/main_pantrypalbackend.yml
 name: Build and deploy Node.js app to Azure Web App - PantryPalBackend
 
 on:
@@ -47,7 +46,23 @@ jobs:
         with:
           name: node-app
 
+      # Detect whether Azure credentials are configured. `secrets` cannot
+      # be used directly in an `if:` expression, so we pass it through `env`
+      # and expose the result as a step output.
+      - name: Check Azure credentials
+        id: azure_check
+        env:
+          CLIENT_ID: ${{ secrets.AZUREAPPSERVICE_CLIENTID_1C32E0CDE0CE4A3DADD22C5FEEEE21D3 }}
+        run: |
+          if [ -n "$CLIENT_ID" ]; then
+            echo "configured=true"  >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Azure secrets are not configured — skipping deployment."
+          fi
+
       - name: Login to Azure
+        if: steps.azure_check.outputs.configured == 'true'
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_1C32E0CDE0CE4A3DADD22C5FEEEE21D3 }}
@@ -55,6 +70,7 @@ jobs:
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C30573CA68294869AE3E2546B2F173BE }}
 
       - name: 'Deploy to Azure Web App'
+        if: steps.azure_check.outputs.configured == 'true'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
